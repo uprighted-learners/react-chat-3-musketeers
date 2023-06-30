@@ -1,0 +1,23 @@
+require("dotenv").config()
+const express = require("express")
+const app = express()
+
+PORT = process.env.PORT || 4000
+HOST = process.env.HOST || "127.0.0.1"
+
+const messageController = require("./controllers/message")
+const roomsController = require("./controllers/rooms")
+const userController = require("./controllers/user")
+
+// const sessionValidation = require("./middlewares/session") Fill in later
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.use("/message", messageController)
+app.use("/rooms", roomsController)
+app.use("/user", userController)
+
+app.listen(PORT, HOST, () => {
+    console.log(`[server] listening on ${HOST}:${PORT}`)
+})
