@@ -17,10 +17,10 @@ router.post("/register", async (req, res) => {
             firstName,
             lastName,
             email,
-            password: bcrypt.hashSync(password, SALT),
+            password: bcrypt.hashSync(password, SALT)   // hashSync is a method that generates a hash for the given string
         })
 
-        await newUser.save()
+        await newUser.save()   // method used to save data in the database
 
         // Generate new JWT token
         const token = jwt.sign({ _id: newUser._id }, JWT_KEY, {
@@ -40,4 +40,36 @@ router.post("/register", async (req, res) => {
     }
 })
 
+router.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body
+        
+        let foundUser = await User.findOne({ email })
+        
+        if (!foundUser) throw Error("User not found")
+
+        // Compare password from req.body with password stored in the database
+        const verifyPwd = await bcrypt.compare(password, foundUser.password)
+
+        if (!verifyPwd) throw Error("Incorrect password")
+
+        const token = jwt.sign(
+            { _id: foundUser._id },
+            JWT_KEY,
+            { expiresIn: 60 * 60 * 24 }
+        )
+
+        res.status(200).json({
+            message: `Logged in`,
+            foundUser,
+            token
+        })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: `${err}`
+        })
+    }
+})
 module.exports = router
