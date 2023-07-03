@@ -10,6 +10,7 @@ const roomsController = require("./controllers/rooms")
 const userController = require("./controllers/user")
 
 // const sessionValidation = require("./middlewares/session") Fill in later
+const { dbConnect } = require("./db")
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -19,5 +20,6 @@ app.use("/rooms", roomsController)
 app.use("/user", userController)
 
 app.listen(PORT, HOST, () => {
+    dbConnect()
     console.log(`[server] listening on ${HOST}:${PORT}`)
 })
