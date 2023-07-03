@@ -19,5 +19,17 @@ router.post("/create", async (req, res) => {
     }
 })
 
+router.get("/", async (req, res) => {
+    try {
+        const findAllRooms = await Room.find({})
+        if (findAllRooms.length === 0) throw Error("No rooms found")
+        res.status(200).json(findAllRooms)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: `${err}`
+        })
+    }
+})
 
 module.exports = router
