@@ -1,10 +1,11 @@
+//? Import dependencies and models:
 const express = require("express")
 const router = express.Router()
 const User = require("../models/User")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
 const SALT = Number(process.env.SALT)
-const JWT_KEY = process.env.JWT_KEY
+const JWT_KEY = process.env.JWT_KEY   // Retrieving the JWT secret key from environment variables
 
 router.post("/register", async (req, res) => {
     try {
@@ -56,7 +57,7 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign(
             { _id: foundUser._id },
             JWT_KEY,
-            { expiresIn: 60 * 60 * 24 }
+            { expiresIn: 60 * 60 * 24 }   
         )
 
         res.status(200).json({
@@ -78,7 +79,7 @@ router.put("/update/:id", async (req, res) => {
         const { id: _id } = req.params
         const changes = req.body
 
-        const updatedOne = await Beer.updateOne(_id, { $set: changes })
+        const updatedOne = await User.updateOne(_id, { $set: changes })
         if (updatedOne.matchedCount === 0) throw Error("ID not found")
 
         res.status(200).json({

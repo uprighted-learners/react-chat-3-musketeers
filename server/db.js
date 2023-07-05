@@ -6,7 +6,7 @@ const dbConnect = async () => {
     try {
     mongoose.set("strictQuery", "true")
     await mongoose.connect(DB_URL, {       // establishes the connection to the DB_URL
-    useNewUrlParser: true,                 // how the data is being send
+    useNewUrlParser: true,                 // specifies how the data is being send
     useUnifiedTopology: true
     })
     console.log(`[db] conncted to: ${DB_URL}`)
