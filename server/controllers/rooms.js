@@ -32,43 +32,47 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.put("/update/:id", async (req, res) => {
+router.put("/:roomId", async (req, res) => {
     try {
-        const { id: _id } = req.params
-        const newRoom = req.body
+        const { roomId } = req.params
+        const { name, description, addedUsers } = req.body
 
-        const updatedOne = await Room.updateOne(_id, { $set: newRoom })
-        if (updatedOne.matchedCount === 0) throw Error("ID not found")
+        // Find the room by its ID
+        const room = await Room.findById(roomId)
+        if (!room) {
+            return res.status(404).json({ error: "Room not found" })
+        }
 
-        res.status(200).json({
-            message: `Entry updated`,
-            updatedOne,
+        // Update the room fields
+        room.name = name
+        room.description = description
+        room.addedUsers = addedUsers
+
+        // Save the updated room
+        const updatedRoom = await room.save()
+
+        return res.json({
+            message: "Room updated successfully",
+            room: updatedRoom,
         })
     } catch (err) {
-        console.log(err)
-        res.status(500).json({
-            message: `${err}`,
-        })
+        res.status(500).json({ message: `${err}` })
     }
 })
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/:roomId", async (req, res) => {
     try {
-        const { id: _id } = req.params
+        const { roomId } = req.params
 
-        const deleteOne = await Room.findByIdAndDelete(_id)
+        // Find the room by its ID and delete it
+        const deletedRoom = await Room.findByIdAndDelete(roomId)
+        if (!deletedRoom) {
+            return res.status(404).json({ error: "Room not found" })
+        }
 
-        if (!deleteOne) throw Error("ID not found")
-
-        res.status(200).json({
-            message: `Room deleted successfully`,
-            deleteOne,
-        })
+        return res.json({ message: "Room deleted successfully" })
     } catch (err) {
-        console.log(err)
-        res.status(500).json({
-            message: `${err}`,
-        })
+        res.status(500).json({ message: `${err}` })
     }
 })
 
