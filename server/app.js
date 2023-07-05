@@ -9,14 +9,13 @@ const messageController = require("./controllers/message")
 const roomsController = require("./controllers/rooms")
 const userController = require("./controllers/user")
 
-// const sessionValidation = require("./middlewares/session") Fill in later
+
 const { dbConnect } = require("./db")
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use("/:roomId/messages", messageController)
-// app.use(messageController)
 app.use("/rooms", roomsController)
 app.use("/user", userController)
 

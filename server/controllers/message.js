@@ -5,7 +5,7 @@ const Message = require("../models/Message")
 
 router.post("/create", async (req, res) => {
     try {
-        const { roomId: _id } = req.params
+        const { roomId: _id } = req.params  // Estrapolation of the id out of the params
         const currentRoom = await Room.findOne({ _id });
 
         if (!currentRoom) {

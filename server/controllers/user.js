@@ -72,4 +72,48 @@ router.post("/login", async (req, res) => {
         })
     }
 })
+
+router.put("/update/:id", async (req, res) => {
+    try {
+        const { id: _id } = req.params
+        const changes = req.body
+
+        const updatedOne = await Beer.updateOne(_id, { $set: changes })
+        if (updatedOne.matchedCount === 0) throw Error("ID not found")
+
+        res.status(200).json({
+            message: `Entry updated`,
+            updatedOne
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: `${err}`
+        })
+    }
+
+})
+
+router.delete("/delete/:id", async (req, res) => {
+    try {
+        const { id: _id } = req.params
+
+        const deleteOne = await User.findByIdAndDelete(_id)
+
+        if (!deleteOne) throw Error("ID not found")
+
+        res.status(200).json({
+            message: `User deleted`,
+            deleteOne
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: `${err}`
+        })
+    }
+})
+
+
+
 module.exports = router
