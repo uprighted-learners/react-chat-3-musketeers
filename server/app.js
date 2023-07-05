@@ -15,7 +15,8 @@ const { dbConnect } = require("./db")
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use("/message", messageController)
+app.use("/:roomId/messages", messageController)
+// app.use(messageController)
 app.use("/rooms", roomsController)
 app.use("/user", userController)
 
