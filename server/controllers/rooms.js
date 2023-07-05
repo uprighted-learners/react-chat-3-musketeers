@@ -1,8 +1,7 @@
 //? Import dependencies and models:
 const express = require("express")
 const router = express.Router()
-const Room = require("../models/room");
-
+const Room = require("../models/Room")
 
 router.post("/create", async (req, res) => {
     try {
@@ -11,11 +10,11 @@ router.post("/create", async (req, res) => {
         const saver = await newRoom.save()
         res.status(201).json({
             message: `Room created`,
-            newRoom
+            newRoom,
         })
     } catch (err) {
         res.status(500).json({
-            message: `${err}`
+            message: `${err}`,
         })
     }
 })
@@ -28,7 +27,7 @@ router.get("/", async (req, res) => {
     } catch (err) {
         console.log(err)
         res.status(500).json({
-            message: `${err}`
+            message: `${err}`,
         })
     }
 })
@@ -43,15 +42,14 @@ router.put("/update/:id", async (req, res) => {
 
         res.status(200).json({
             message: `Entry updated`,
-            updatedOne
+            updatedOne,
         })
     } catch (err) {
         console.log(err)
         res.status(500).json({
-            message: `${err}`
+            message: `${err}`,
         })
     }
-
 })
 
 router.delete("/delete/:id", async (req, res) => {
@@ -64,12 +62,12 @@ router.delete("/delete/:id", async (req, res) => {
 
         res.status(200).json({
             message: `Room deleted successfully`,
-            deleteOne
+            deleteOne,
         })
     } catch (err) {
         console.log(err)
         res.status(500).json({
-            message: `${err}`
+            message: `${err}`,
         })
     }
 })

@@ -2,108 +2,94 @@
 const express = require("express")
 const router = express.Router()
 const Message = require("../models/Message")
-
+const Room = require("../models/Room")
 
 router.post("/create", async (req, res) => {
+    const { user, room, body } = req.body
+
     try {
-        const { roomId: _id } = req.params  // Estrapolation of the id out of the params
-        const currentRoom = await Room.findOne({ _id });
-
-        if (!currentRoom) {
-            res.status(404).json({
-                message: `Room not found`
-            })
+        // Find the room by its name
+        const foundRoom = await Room.findOne({ name: room })
+        if (!foundRoom) {
+            return res.status(404).json({ error: "Room not found" })
         }
 
-        const newMessage = {
-            when: req.body.when,
-            user: req.body.user,
-            room: _id,
-            body: req.body.body
-        }
+        // Create a message in the found room
+        const newMessage = new Message({
+            user: user,
+            room: foundRoom.name,
+            body: body,
+        })
+        await newMessage.save()
 
-        room.message.push(newMessage)
-        await room.save()
-
-        res.status(201).json({
+        return res.json({
             message: "Message created successfully",
-            newMessage
+            messageId: newMessage._id,
         })
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            message: `${err}`
-        })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ error: "An error occurred" })
     }
 })
 
-
-//  GET ALL THE MESSAGES IN  ROOM
-router.get("/all", async (req, res) => {
+//  GET ALL THE MESSAGES IN ROOM
+router.get("/:roomName", async (req, res) => {
+    const { roomName } = req.params
 
     try {
-        const { roomId: _id } = req.params
-        const currentRoom = await Room.findOne({ _id });
-
-        if (!currentRoom) {
-            return res.status(404).json({
-                message: "Room not found",
-            });
+        // Find the room by its name
+        const room = await Room.findOne({ name: roomName })
+        if (!room) {
+            return res.status(404).json({ error: "Room not found" })
         }
 
-        const messages = currentRoom.messages;
-        res.status(200).json({
-            message: "Messages retrieved successfully",
-            messages
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            message: `${err}`
-        });
-    }
-});
+        // Find all messages in the room
+        const messages = await Message.find({ room: room.name })
 
-router.put("/update/:id", async (req, res) => {
-    try {
-        const { id: _id } = req.params
-        const newMessage = req.body
-
-        const updatedOne = await Message.updateOne(_id, { $set: newMessage })
-        if (updatedOne.matchedCount === 0) throw Error("ID not found")
-
-        res.status(200).json({
-            message: `Entry updated`,
-            updatedOne
-        })
-    } catch (err) {
-        console.log(err)
-        res.status(500).json({
-            message: `${err}`
-        })
+        return res.json({ messages: messages })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ error: "An error occurred" })
     }
 })
 
-router.delete("/delete/:id", async (req, res) => {
+router.put("/:messageId", async (req, res) => {
+    const { messageId } = req.params
+    const { body } = req.body
+
     try {
-        const { id: _id } = req.params
+        // Find the message by its ID
+        const message = await Message.findById(messageId)
+        if (!message) {
+            return res.status(404).json({ error: "Message not found" })
+        }
 
-        const deleteOne = await Message.findByIdAndDelete(_id)
+        // Update the message body
+        message.body = body
+        await message.save()
 
-        if (!deleteOne) throw Error("ID not found")
-
-        res.status(200).json({
-            message: `Message deleted`,
-            deleteOne
-        })
-    } catch (err) {
-        console.log(err)
-        res.status(500).json({
-            message: `${err}`
-        })
+        return res.json({ message: "Message updated successfully" })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ error: "An error occurred" })
     }
 })
 
+router.delete("/:messageId", async (req, res) => {
+    const { messageId } = req.params
+
+    try {
+        // Find the message by its ID and delete it
+        const deletedMessage = await Message.findByIdAndDelete(messageId)
+        if (!deletedMessage) {
+            return res.status(404).json({ error: "Message not found" })
+        }
+
+        return res.json({ message: "Message deleted successfully" })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ error: "An error occurred" })
+    }
+})
 
 module.exports = router

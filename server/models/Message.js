@@ -5,13 +5,14 @@ const Message = new mongoose.Schema(
         when: {
             type: Date,
             required: true,
+            default: Date.now,
         },
         user: {
             type: String,
             required: true,
         },
         room: {
-            type: Number,
+            type: String,
             required: true,
         },
         body: {
