@@ -73,25 +73,42 @@ router.post("/login", async (req, res) => {
 
 router.put("/update/:id", async (req, res) => {
     try {
-        const { id: _id } = req.params
-        const changes = req.body
+        const userId = req.params.id
+        const { firstName, lastName, email, password } = req.body
 
-        const updatedOne = await User.updateOne(_id, { $set: changes })
-        if (updatedOne.matchedCount === 0) throw Error("ID not found")
+        if (!firstName || !lastName || !email || !password) {
+            throw Error("Incorrect schema values")
+        }
+
+        // Find the user by ID
+        const user = await User.findById(userId)
+
+        if (!user) {
+            throw Error("User not found")
+        }
+
+        // Update the user fields
+        user.firstName = firstName
+        user.lastName = lastName
+        user.email = email
+        user.password = bcrypt.hashSync(password, SALT)
+
+        // Save the updated user
+        await user.save()
 
         res.status(200).json({
-            message: `Entry updated`,
-            updatedOne,
+            message: "User updated",
+            user,
         })
-    } catch (err) {
-        console.log(err)
+    } catch (error) {
+        console.log(error)
         res.status(500).json({
-            message: `${err}`,
+            message: `${error}`,
         })
     }
 })
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
     try {
         const { id: _id } = req.params
 
