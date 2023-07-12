@@ -1,5 +1,7 @@
 import React, { useState } from "react"
-import Auth from "./components/Auth/Auth"
+import Auth from "./components/Auth"
+import AllRooms from "./components/AllRooms"
+import RoomMessages from "./components/RoomMessages"
 import "./App.css"
 
 function App() {
@@ -13,9 +15,15 @@ function App() {
     return (
         <div>
             {token ? (
-                <div>
-                    User is logged in
-                    <button onClick={handleLogout}>Logout</button>
+                <div className="app-container">
+                    <div className="first-section">
+                        <AllRooms />
+                        <button onClick={handleLogout}>Logout</button>
+                    </div>
+
+                    <div className="second-section">
+                        <RoomMessages />
+                    </div>
                 </div>
             ) : (
                 <Auth setToken={setToken} />
