@@ -1,5 +1,7 @@
 import React, { useState } from "react"
 import Auth from "./components/Auth"
+import AllRooms from "./components/AllRooms"
+import RoomMessages from "./components/RoomMessages"
 import "./App.css"
 
 function App() {
@@ -10,12 +12,16 @@ function App() {
         localStorage.removeItem("token")
     }
 
+
     return (
         <div>
             {token ? (
                 <div>
                     User is logged in
                     <button onClick={handleLogout}>Logout</button>
+                    <AllRooms />
+
+                    <RoomMessages />
                 </div>
             ) : (
                 <Auth setToken={setToken} />

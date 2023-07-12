@@ -1,0 +1,73 @@
+body {
+    background-color: aliceblue;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+}
+
+.sidebar {
+    background-color: #2f3135;
+    display: flex;
+    flex-direction: column;
+    width: 17%;
+    height: 100vh;
+    position: relative;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #606267;
+    color: white;
+    border-bottom: 5px solid #2f3135;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: 3px solid black;
+}
+
+.sidebar-header > h2 {
+    color: #9AE19D;
+}
+
+.add-room {
+    cursor: pointer;
+    color: #537A5A;
+}
+
+.add-room:hover {
+color: white;
+}
+
+.sidebar-rooms > h2 {
+    font-size: 13px;
+    color: grey;
+    padding: 1em;
+    margin: 0;
+}
+
+.sidebar-rooms:hover > h2 {
+color: white;
+background-color: #40464b;
+padding: 12px;
+cursor: pointer;
+}
+
+.hash {
+    font-size: 24px;
+    padding-right: 6px;
+}
+
+.sidebar-user {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    margin-left: 1em;
+    gap: 2em;
+    position: absolute;
+    bottom: 1em;
+}
+
+.user-info > h3 {
+    color: #9AE19D;
+    margin: 0;
+}
