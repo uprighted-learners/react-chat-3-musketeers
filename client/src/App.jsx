@@ -16,12 +16,16 @@ function App() {
     return (
         <div>
             {token ? (
-                <div>
-                    User is logged in
-                    <button onClick={handleLogout}>Logout</button>
-                    <AllRooms />
+                <div className="app-container">
+                    <div className="first-section">
+                        <AllRooms />
+                        <button onClick={handleLogout}>Logout</button>
+                    </div>
 
-                    <RoomMessages />
+                    <div className="second-section">
+                        <RoomMessages />
+                    </div>
+
                 </div>
             ) : (
                 <Auth setToken={setToken} />

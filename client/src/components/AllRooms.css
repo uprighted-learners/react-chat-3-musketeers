@@ -1,5 +1,5 @@
 body {
-    background-color: aliceblue;
+    background-color: #2f3135;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;
 }
@@ -8,7 +8,7 @@ body {
     background-color: #2f3135;
     display: flex;
     flex-direction: column;
-    width: 17%;
+    width: 100%;
     height: 100vh;
     position: relative;
 }
