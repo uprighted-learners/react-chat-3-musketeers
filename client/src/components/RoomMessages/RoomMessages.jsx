@@ -4,46 +4,37 @@ import { AiOutlineTeam, AiOutlineSend } from "react-icons/ai"
 import Message from "../Message/Message"
 
 function RoomMessages({ room }) {
-    const [messages, setMessages] = useState([
-        { _id: 1, body: "Hello!", user: "User 1", when: "2023-07-13 10:00 AM" },
-        {
-            _id: 2,
-            body: "Hi there!",
-            user: "User 2",
-            when: "2023-07-13 11:30 AM",
-        },
-        {
-            _id: 3,
-            body: "Greetings!",
-            user: "User 3",
-            when: "2023-07-13 2:45 PM",
-        },
-    ])
+    const [messages, setMessages] = useState([])
 
     const fetchMessages = async () => {
-        // const url = `http://localhost:4000/messages/${room.name}`
-        // fetch(url, {
-        //     method: "GET",
-        //     headers: new Headers({
-        //         "Content-Type": "application/json",
-        //     }),
-        // })
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         if (Array.isArray(data)) {
-        //             setMessages(data)
-        //         } else if (typeof data === "object") {
-        //             const dataArray = Object.values(data)
-        //             setMessages(dataArray)
-        //         } else {
-        //             console.error(
-        //                 "Received data is not an array or object:",
-        //                 data
-        //             )
-        //         }
-        //     })
-        //     .catch((err) => console.log(err))
-        // Commented out the actual data fetching logic and used static data for testing
+        const url = `http://localhost:4000/messages/${room.name}`
+
+        try {
+            const response = await fetch(url, {
+                method: "GET",
+                headers: new Headers({
+                    "Content-Type": "application/json",
+                }),
+            })
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch messages")
+            }
+
+            const data = await response.json()
+            const { messages } = data // Access the messages array correctly
+
+            if (Array.isArray(messages)) {
+                setMessages(messages)
+            } else {
+                console.error(
+                    "Received data.messages is not an array:",
+                    messages
+                )
+            }
+        } catch (error) {
+            console.error("Error fetching messages:", error)
+        }
     }
 
     useEffect(() => {
@@ -67,7 +58,7 @@ function RoomMessages({ room }) {
             <div className="messages">
                 {messages.map((message) => (
                     <Message
-                        key={message._id}
+                        key={message._id} // Assign a unique key prop based on _id
                         body={message.body}
                         user={message.user}
                         timestamp={message.when}
