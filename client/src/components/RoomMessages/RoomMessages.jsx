@@ -5,6 +5,7 @@ import Message from "../Message/Message"
 
 function RoomMessages({ room }) {
     const [messages, setMessages] = useState([])
+    const [newMessage, setNewMessage] = useState("")
 
     const fetchMessages = async () => {
         const url = `http://localhost:4000/messages/${room.name}`
@@ -22,7 +23,7 @@ function RoomMessages({ room }) {
             }
 
             const data = await response.json()
-            const { messages } = data // Access the messages array correctly
+            const { messages } = data
 
             if (Array.isArray(messages)) {
                 setMessages(messages)
@@ -41,6 +42,42 @@ function RoomMessages({ room }) {
         fetchMessages()
     }, [room])
 
+    const handleInputChange = (event) => {
+        setNewMessage(event.target.value)
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+
+        const newMessageObject = {
+            user: "Collin",
+            room: room.name,
+            body: newMessage,
+        }
+
+        try {
+            const response = await fetch(
+                "http://localhost:4000/messages/create",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(newMessageObject),
+                }
+            )
+
+            if (!response.ok) {
+                throw new Error("Failed to send message")
+            }
+
+            setNewMessage("")
+            fetchMessages() // Fetch messages again after sending a new message
+        } catch (error) {
+            console.error("Error sending message:", error)
+        }
+    }
+
     return (
         <div className="container">
             <header>
@@ -58,7 +95,7 @@ function RoomMessages({ room }) {
             <div className="messages">
                 {messages.map((message) => (
                     <Message
-                        key={message._id} // Assign a unique key prop based on _id
+                        key={message._id}
                         body={message.body}
                         user={message.user}
                         timestamp={message.when}
@@ -67,8 +104,12 @@ function RoomMessages({ room }) {
             </div>
 
             <div className="input-field">
-                <form>
-                    <input placeholder={`Message text`} />
+                <form onSubmit={handleSubmit}>
+                    <input
+                        placeholder={`Message text`}
+                        value={newMessage}
+                        onChange={handleInputChange}
+                    />
                     <div className="input-send">
                         <button type="submit" className="send-button">
                             Send
