@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import './AllRooms.css'
-import { TiPlus } from 'react-icons/ti'
-import { AiOutlineUser } from "react-icons/ai";
+import React, { useEffect, useState } from "react"
+import "./AllRooms.css"
+import { TiPlus } from "react-icons/ti"
+import { AiOutlineUser } from "react-icons/ai"
 
 function AllRooms() {
-
     const [rooms, setRooms] = useState([])
 
     const fetchRooms = () => {
@@ -13,12 +12,12 @@ function AllRooms() {
         fetch(url, {
             method: "GET",
             headers: new Headers({
-                "Content-Type": "application.json"
-            })
+                "Content-Type": "application.json",
+            }),
         })
-            .then(res => res.json())
-            .then(data => setRooms(data))
-            .catch(err => console.log(err))
+            .then((res) => res.json())
+            .then((data) => setRooms(data))
+            .catch((err) => console.log(err))
     }
 
     useEffect(() => {
@@ -27,38 +26,33 @@ function AllRooms() {
 
     const renderRooms = () => {
         return (
-            <div className='sidebar'>
-                <div className='sidebar-header'>
+            <div className="sidebar">
+                <div className="sidebar-header">
                     <h2>Rooms</h2>
-                    <TiPlus className='add-room' size="25px" />
+                    <TiPlus className="add-room" size="25px" />
                 </div>
-                <div>
-
-                </div>
+                <div></div>
                 {rooms.map((r, i) => (
-                    <div className='sidebar-rooms' key={i}>
+                    <div className="sidebar-rooms" key={i}>
                         <h2>
-                            <span className="hash">#</span>{r.name}
+                            <span className="hash">#</span>
+                            {r.name}
                         </h2>
                     </div>
-                ))
-                }
+                ))}
 
-                <div className='sidebar-user'>
+                <div className="sidebar-user">
                     <AiOutlineUser size="19px" color="grey" />
-                    <div className='user-info'>
+                    <div className="user-info">
                         <h3>Tiffania</h3>
                         <h3>Iside</h3>
                     </div>
                 </div>
-
             </div>
         )
     }
 
-    return (
-        <>{renderRooms()}</>
-    )
+    return <>{renderRooms()}</>
 }
 
 export default AllRooms

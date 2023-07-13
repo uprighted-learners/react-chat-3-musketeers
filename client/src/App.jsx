@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import Auth from "./components/Auth"
+import Auth from "./components/Auth/Auth"
 import AllRooms from "./components/AllRooms"
 import RoomMessages from "./components/RoomMessages"
 import "./App.css"

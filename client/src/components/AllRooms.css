@@ -26,16 +26,16 @@ body {
 }
 
 .sidebar-header > h2 {
-    color: #9AE19D;
+    color: #9ae19d;
 }
 
 .add-room {
     cursor: pointer;
-    color: #537A5A;
+    color: #537a5a;
 }
 
 .add-room:hover {
-color: white;
+    color: white;
 }
 
 .sidebar-rooms > h2 {
@@ -46,10 +46,10 @@ color: white;
 }
 
 .sidebar-rooms:hover > h2 {
-color: white;
-background-color: #40464b;
-padding: 12px;
-cursor: pointer;
+    color: white;
+    background-color: #40464b;
+    padding: 12px;
+    cursor: pointer;
 }
 
 .hash {
@@ -68,6 +68,6 @@ cursor: pointer;
 }
 
 .user-info > h3 {
-    color: #9AE19D;
+    color: #9ae19d;
     margin: 0;
 }
