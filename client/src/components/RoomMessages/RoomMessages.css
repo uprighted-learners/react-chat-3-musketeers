@@ -1,5 +1,6 @@
 body {
-    background-color: #363a3f;
+    margin: 0;
+    background-color: #121212;
 }
 
 .container {
@@ -28,14 +29,14 @@ header {
     padding-right: 1em;
 }
 
-.title>h2 {
-    color: #9AE19D;
+.title > h2 {
+    color: #9ae19d;
     padding-bottom: 0;
     margin-top: 2em;
     padding: 0;
 }
 
-header>h4 {
+header > h4 {
     color: grey;
     margin-top: 0;
 }
@@ -46,10 +47,9 @@ header>h4 {
     margin: 4em;
     border-radius: 5px;
     border-top: 1px solid gray;
-    background-color: #474747;
+    background-color: #222222;
     padding: 1em;
     width: 60%;
-
 }
 
 form {
@@ -58,7 +58,7 @@ form {
     justify-content: space-between;
 }
 
-.input-field>form>input {
+.input-field > form > input {
     background: transparent;
     border: none;
     padding: 1em;
@@ -77,12 +77,12 @@ form {
     font-weight: bolder;
     cursor: pointer;
     font-family: serif;
-    color: #909590;
+    color: white;
     font-size: 18px;
 }
 
 .send-button:hover {
-    color: #9AE19D;
+    color: #9ae19d;
 }
 
 .messages {
