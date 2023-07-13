@@ -4,8 +4,8 @@ import './Message.css'
 function Message() {
     return (
         <div className='single-message'>
-            <h4>Username<span className='timestamp'>Time</span></h4>
-            <p>Text message</p>
+            <h4>User Name<span className='timestamp'>Time</span></h4>
+            <p>Hello</p>
         </div>
     )
 }

@@ -47,8 +47,8 @@ function AllRooms() {
                 <div className='sidebar-user'>
                     <AiOutlineUser size="19px" color="grey" />
                     <div className='user-info'>
-                        <h3>Tiffania</h3>
-                        <h3>Iside</h3>
+                        <h3>firstName</h3>
+                        <h3>lastName</h3>
                     </div>
                 </div>
 
