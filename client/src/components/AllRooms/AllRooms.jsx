@@ -43,9 +43,15 @@ function AllRooms() {
 
                 <div className="sidebar-user">
                     <AiOutlineUser size="19px" color="grey" />
+<<<<<<< HEAD:client/src/components/AllRooms.jsx
                     <div className="user-info">
                         <h3>Tiffania</h3>
                         <h3>Iside</h3>
+=======
+                    <div className='user-info'>
+                        <h3>firstName</h3>
+                        <h3>lastName</h3>
+>>>>>>> e0a48ba5fdd1078ed42b103e4d62a4ab8ab9e181:client/src/components/AllRooms/AllRooms.jsx
                     </div>
                 </div>
             </div>
