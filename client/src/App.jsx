@@ -1,12 +1,7 @@
 import React, { useState } from "react"
 import Auth from "./components/Auth/Auth"
-<<<<<<< HEAD
-import AllRooms from "./components/AllRooms"
-import RoomMessages from "./components/RoomMessages"
-=======
 import AllRooms from "./components/AllRooms/AllRooms"
 import RoomMessages from "./components/RoomMessages/RoomMessages"
->>>>>>> e0a48ba5fdd1078ed42b103e4d62a4ab8ab9e181
 import "./App.css"
 
 function App() {
