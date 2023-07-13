@@ -3,7 +3,7 @@ import "./AllRooms.css"
 import { TiPlus } from "react-icons/ti"
 import { AiOutlineUser } from "react-icons/ai"
 
-function AllRooms() {
+function AllRooms({ onSelectRoom }) {
     const [rooms, setRooms] = useState([])
 
     const fetchRooms = () => {
@@ -33,7 +33,7 @@ function AllRooms() {
                 </div>
                 <div></div>
                 {rooms.map((r, i) => (
-                    <div className="sidebar-rooms" key={i}>
+                    <div className="sidebar-rooms" key={i} onClick={() => handleRoomClick(r)}>
                         <h2>
                             <span className="hash">#</span>
                             {r.name}
@@ -52,6 +52,9 @@ function AllRooms() {
         )
     }
 
+    const handleRoomClick = (room) => {
+        onSelectRoom(room);
+    }
     return <>{renderRooms()}</>
 }
 

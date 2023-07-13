@@ -3,11 +3,12 @@ import "./RoomMessages.css"
 import { AiOutlineTeam, AiOutlineSend } from "react-icons/ai"
 import Message from "../Message/Message"
 
-function RoomMessages() {
+function RoomMessages({ room }) {
     const [messages, setMessages] = useState([])
+    console.log(room)
 
-    const fetchMessages = () => {
-        const url = "http://localhost:4000/messages/Main"
+    const fetchMessages = async () => {
+        const url = `http://localhost:4000/messages/${room.name}`
 
         fetch(url, {
             method: "GET",
@@ -34,7 +35,8 @@ function RoomMessages() {
 
     useEffect(() => {
         fetchMessages()
-    }, [])
+    }, [room])
+console.log(messages)
 
     return (
         <div className="container">

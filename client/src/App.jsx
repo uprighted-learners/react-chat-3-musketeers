@@ -6,6 +6,11 @@ import "./App.css"
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem("token") || "")
+    const [selectedRoom, setSelectedRoom] = useState(null)  //added now
+
+    const handleRoomSelection = (room) => {
+        setSelectedRoom(room)
+    } //added now
 
     const handleLogout = () => {
         setToken("")
@@ -17,12 +22,12 @@ function App() {
             {token ? (
                 <div className="app-container">
                     <div className="first-section">
-                        <AllRooms />
+                        <AllRooms onSelectRoom={handleRoomSelection} />
                         <button onClick={handleLogout}>Logout</button>
                     </div>
 
-                    <div className="second-section">
-                        <RoomMessages />
+                    <div className="second-section"> 
+                        {selectedRoom && <RoomMessages room={selectedRoom} />}  
                     </div>
                 </div>
             ) : (
