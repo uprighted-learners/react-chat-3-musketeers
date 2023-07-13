@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import Auth from "./components/Auth"
-import AllRooms from "./components/AllRooms"
-import RoomMessages from "./components/RoomMessages"
+import Auth from "./components/Auth/Auth"
+import AllRooms from "./components/AllRooms/AllRooms"
+import RoomMessages from "./components/RoomMessages/RoomMessages"
 import "./App.css"
 
 function App() {
