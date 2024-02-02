@@ -1,0 +1,13 @@
+.app-container {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+}
+
+.first-section {
+    width: 17%;
+}
+
+.second-section {
+    width: 100%;
+}
